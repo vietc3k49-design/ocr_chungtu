@@ -1,0 +1,123 @@
+{
+ "_schema": "stage3b_loading_plan_labels/v1",
+ "_purpose": "Tu dien nhan chuc danh in san tren khoi ky bieu mau LOADING_PLAN cua KIDO. Tang 3b dung de DO vi tri 5 cot tren TUNG ANH thay cho ranh gioi hardcode. Tach ra khoi Python theo AGENTS.md muc 9.7 (no ky thuat 'tu dien van trong code').",
+ "_scope": "Gan voi bieu mau LOADING_PLAN cua KIDO. Doi khach hang / doi bieu mau => phai thay file nay, khong sua Python.",
+ "_matching": "Chuan hoa NFD bo dau + uppercase ASCII; khop cum token lien nhau CUNG MOT DONG OCR; chap nhan khi min(rapidfuzz.ratio(token_j, pattern_j)) >= fuzz_min_score.",
+ "version": "1.0.0",
+ "fuzz_min_score": 75,
+ "columns": [
+  {
+   "index": 0,
+   "role": "Người lập phiếu",
+   "required": true,
+   "expected_color": "blue_ink",
+   "description": "Cột 1: Chữ ký người lập lệnh xuất hàng KIDO",
+   "label_patterns": [
+    [
+     "NGUOI",
+     "LAP"
+    ],
+    [
+     "LAP",
+     "PHIEU"
+    ]
+   ]
+  },
+  {
+   "index": 1,
+   "role": "Trưởng BP Kho / Nhóm trưởng",
+   "required": false,
+   "expected_color": "blue_ink",
+   "description": "Cột 2: Trưởng kho ký duyệt lệnh (Tùy chọn)",
+   "label_patterns": [
+    [
+     "TRUONG",
+     "BP"
+    ],
+    [
+     "TRUONG",
+     "NHOM"
+    ],
+    [
+     "TRUONG",
+     "BO"
+    ]
+   ]
+  },
+  {
+   "index": 2,
+   "role": "Tài xế (Lái xe nhận hàng)",
+   "required": true,
+   "expected_color": "blue_ink",
+   "description": "Cột 3: Lái xe ký nhận số lượng lên xe",
+   "label_patterns": [
+    [
+     "TAI",
+     "XE"
+    ],
+    [
+     "LAI",
+     "XE"
+    ]
+   ]
+  },
+  {
+   "index": 3,
+   "role": "Người nhận hàng",
+   "required": true,
+   "expected_color": "blue_ink",
+   "description": "Cột 4: Đại diện nhận hàng ký tên",
+   "label_patterns": [
+    [
+     "NGUOI",
+     "NHAN"
+    ]
+   ]
+  },
+  {
+   "index": 4,
+   "role": "Người giao / Thủ kho xuất",
+   "required": true,
+   "expected_color": "blue_ink",
+   "description": "Cột 5: Thủ kho giao hàng ký xác nhận xuất kho",
+   "label_patterns": [
+    [
+     "NGUOI",
+     "GIAO"
+    ],
+    [
+     "THU",
+     "KHO"
+    ]
+   ]
+  }
+ ],
+ "fallback_columns": {
+  "_purpose": "Duong lui CHI dung khi do nhan chuc danh that bai (COLUMN_DETECTION_FAILED / COLUMN_OCR_UNAVAILABLE / COLUMN_ORDER_VIOLATION / COLUMN_PITCH_IMPLAUSIBLE). Bat buoc anchor_y da do duoc tu vach ke bang (OpenCV) — khong co moc neo thi VAN ABSTAIN, khong doan.",
+  "_nguon": "Trung vi x0/x1 cua 70 o tren 14 trang trong output/stage4_dynamic_gt_v4/gt_labeled.json (do 29/09/2026). LUU Y: day la phan bo dau ra cua chinh bo do nhan OCR, KHONG phai phep do doc lap vi tri cot — muc tieu la XAP XI bo do chinh khi no chet, khong phai thay the no.",
+  "_khac_hang_so_cu": "Hang so bi bo ngay 27/09 la 0.02/0.20/0.36/0.54/0.72/0.98 — lech TRAI 0.03-0.05 (20-30% be rong cot), nguon 9/10 FP. Bo so duoi day lech +0.03..+0.05 so voi no, tuc da sua dung phan lech do.",
+  "_canh_bao": "Delta x0 lon nhat do duoc la 0.060 (cot 1) tren be rong cot ~0.17 = 35%. Vi vay moi target sinh tu duong lui LUON mang review_required=true va column_source=FALLBACK_HARDCODE; KHONG BAO GIO duoc ra phan quyet DAT ma khong qua nguoi kiem.",
+  "enabled": false,
+  "version": "1.0.0",
+  "do_ngay": "2026-09-29",
+  "n_trang_do": 14,
+  "n_o_do": 70,
+  "bounds": [
+   0.068,
+   0.238,
+   0.408,
+   0.581,
+   0.75,
+   0.938
+  ],
+  "delta_x0_max": 0.06,
+  "box_height_median": 0.19,
+  "chi_ap_dung_cho": [
+   "COLUMN_DETECTION_FAILED",
+   "COLUMN_ORDER_VIOLATION",
+   "COLUMN_PITCH_IMPLAUSIBLE"
+  ],
+  "_khong_ap_dung_cho": "COLUMN_OCR_UNAVAILABLE — thieu tesseract/rapidfuzz la LOI CAI DAT he thong, khong phai scan xau. Lay hang so che di se lam MOI chung tu chay bang hang so ma khong ai biet. Phai ABSTAIN de lo ra. (test_stage3b_zone_suite CA 13 bat duoc dieu nay.)",
+  "_vi_sao_mac_dinh_tat": "Do 29/09: tren 19 anh demo o DO PHAN GIAI PRODUCTION duong lui chay 0 lan => KHONG cai thien duoc gi do duoc. Nhung khi anh bi ha do phan giai (x0.5) no chay 15 lan va sinh hop lech toi 0.019 so voi tham chieu H2200 (nguong test 0.010) => VI PHAM tinh chat an toan ma test_stage3b_zone_suite CA 11a bao ve: 'sai do phan giai chi duoc dan toi ABSTAIN, KHONG duoc dan toi hop sai cho'. Da xay va da test day du (test_lp_column_fallback 18/18); bat len chi bang mot dong nay khi co anh THAT chung minh no can."
+ }
+}

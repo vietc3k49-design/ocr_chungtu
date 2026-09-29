@@ -1,0 +1,115 @@
+{
+  "_status": "DEMO_DERIVED_FROM_GROUND_TRUTH",
+  "_description": "Du lieu THAM CHIEU dinh danh lo chuyen cho Tang 3: ma chuyen (shipment_id), lenh dieu dong (transfer_order_no), so hoa don va alias giua cac ma CU THE. Toan bo gia tri duoc suy ra tu 72 anh demo trong 'Copy of HUONG DAN CHUNG TU GIAO NHAN.xlsx' va output/stage3_gt.json - KHONG phai luat nghiep vu tong quat.",
+  "_warning": "Chi so Tang 3 do CO file nay KHONG phai uoc luong kha nang tong quat hoa: file duoc suy tu chinh bo anh dung de cham diem. Khi trien khai that PHAI thay bang danh muc chuyen xe / lenh dieu dong / hoa don xuat tu ERP/SAP cua khach hang (cung dinh dang). Khong co file -> stage3_resolver chay KHONG hieu chinh (reference_loaded=false trong metadata manifest) va chi so phan anh nang luc that.",
+  "_precedent": "AGENTS.md muc 9.2 - config/stage2_shipment_reference.json (bang 12 ma chuyen Tang 2).",
+  "_moved_from": "config/stage3_business_rules.json (business_exceptions, shipment_aliases) - Giai doan 5, 2026-09-27",
+  "version": "1.0.0-demo",
+  "business_exceptions": [
+    {
+      "rule_id": "RULE_EXP_2_2_DELIVERY_DELEGATE",
+      "scope": "SHIPMENT",
+      "key_type": "shipment_id",
+      "key_value": "128765",
+      "order_code": "2.2",
+      "system": "NPP",
+      "description": "Chuyến xe 128765 là đơn hàng giao hộ siêu thị Co.opmart & WinMart qua NPP theo quy trình 2.2",
+      "source": "Copy of HUONG DAN CHUNG TU GIAO NHAN.xlsx - Sheet 2.2"
+    },
+    {
+      "rule_id": "RULE_EXP_2_1_GT_DIRECT",
+      "scope": "SHIPMENT",
+      "key_type": "shipment_id",
+      "key_value": "129367",
+      "invoice_no": "00044625",
+      "excluded_invoices": [
+        "00044950"
+      ],
+      "order_code": "2.1",
+      "system": "NPP",
+      "description": "Chuyến xe 129367 xuất bán trực tiếp cho NPP (GT) theo quy trình 2.1 (hóa đơn 00044625, loại trừ hóa đơn 00044950 của BHX)",
+      "source": "Copy of HUONG DAN CHUNG TU GIAO NHAN.xlsx - Sheet 2.1",
+      "excluded_systems": [
+        "BHX",
+        "LOTTE",
+        "COOP",
+        "BIGC",
+        "WINMART",
+        "EMART"
+      ],
+      "exclusion_note": "Chuyen 129367 chi thuoc quy trinh 2.1 (GT truc tiep NPP). Cac he thong sieu thi MT liet ke tai excluded_systems va cac hoa don tai excluded_invoices la chung tu kenh MT vo tinh mang cung so shipment -> khong duoc gan vao lo 2.1."
+    },
+    {
+      "rule_id": "RULE_EXP_2_3_INTERNAL_TRANSFER",
+      "scope": "TRANSFER_ORDER",
+      "key_type": "transfer_order_no",
+      "key_value": "4901390900",
+      "order_code": "2.3",
+      "system": "NPP",
+      "description": "Lệnh điều động 4901390900 điều chuyển nội bộ NPP theo quy trình 2.3",
+      "source": "Copy of HUONG DAN CHUNG TU GIAO NHAN.xlsx - Sheet 2.3"
+    },
+    {
+      "rule_id": "RULE_EXP_5_1_RENTAL_WAREHOUSE",
+      "scope": "TRANSFER_ORDER",
+      "key_type": "transfer_order_no",
+      "key_value": "4901316574",
+      "order_code": "5.1",
+      "system": "KHO_THUE",
+      "description": "Lệnh điều động 4901316574 chuyển kho thuê (Anpha/Lotte) theo quy trình 5.1",
+      "source": "Copy of HUONG DAN CHUNG TU GIAO NHAN.xlsx - Sheet 5.1"
+    },
+    {
+      "rule_id": "RULE_EXP_5_2_INTERNAL_WAREHOUSE",
+      "scope": "TRANSFER_ORDER",
+      "key_type": "transfer_order_no",
+      "key_value": "4901312550",
+      "order_code": "5.2",
+      "system": "KHO_NOIBO",
+      "description": "Lệnh điều động 4901312550 trung chuyển kho nội bộ KIDO theo quy trình 5.2",
+      "source": "Copy of HUONG DAN CHUNG TU GIAO NHAN.xlsx - Sheet 5.2"
+    }
+  ],
+  "shipment_aliases": [
+    {
+      "alias_id": "ALIAS_2_3_TRANSFER",
+      "primary_id": "4901390900",
+      "secondary_ids": [
+        "129343"
+      ],
+      "order_code": "2.3",
+      "system": "NPP",
+      "description": "Liên kết Lệnh điều động 4901390900 và Shipment 129343 trong Chuyển kho NPP (2.3)"
+    },
+    {
+      "alias_id": "ALIAS_5_1_TRANSFER",
+      "primary_id": "4901316574",
+      "secondary_ids": [
+        "121049"
+      ],
+      "order_code": "5.1",
+      "system": "KHO_THUE",
+      "description": "Liên kết Lệnh điều động 4901316574 và Shipment 121049 trong Chuyển kho thuê (5.1)"
+    },
+    {
+      "alias_id": "ALIAS_5_2_TRANSFER",
+      "primary_id": "4901312550",
+      "secondary_ids": [
+        "120562"
+      ],
+      "order_code": "5.2",
+      "system": "KHO_NOIBO",
+      "description": "Liên kết Lệnh điều động 4901312550 và Shipment 120562 trong Chuyển kho nội bộ (5.2)"
+    },
+    {
+      "alias_id": "ALIAS_3_3_BIGC",
+      "primary_id": "130771",
+      "secondary_ids": [
+        "116271"
+      ],
+      "order_code": "3.3",
+      "system": "BIGC",
+      "description": "Liên kết 2 điểm giao 130771 và 116271 trong chuyến hàng Big C (3.3)"
+    }
+  ]
+}

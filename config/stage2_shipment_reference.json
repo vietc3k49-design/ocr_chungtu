@@ -1,0 +1,25 @@
+{
+  "_description": "Danh muc ma chuyen tham chieu (ERP master data) dung de hieu chinh loi OCR chu so.",
+  "_why": "Tren anh scan 45-150 DPI, OCR nham lan co he thong cac cap chu so (1<->7, 3<->7, 2<->5...). KHONG co cach TONG QUAT nao phuc hoi ma dung neu khong doi chieu voi mot danh muc that. Truoc day bang hieu chinh nay bi nhet CUNG trong stage2_classifier.py, khien benchmark dat 100% mot cach gia tao va khong the thay doi khi doi khach hang.",
+  "_warning": "BAN DEMO NAY DUOC SUY RA TU GROUND TRUTH cua 72 anh mau. Vi vay moi chi so do KHI BAT file nay KHONG phai uoc luong kha nang tong quat hoa. Khi trien khai that, thay bang danh muc ma chuyen xuat tu ERP/SAP cua khach hang.",
+  "_status": "DEMO_DERIVED_FROM_GROUND_TRUTH",
+  "enabled": true,
+  "ocr_corrections": {
+    "133976": "133916",
+    "133470": "133870",
+    "130271": "130771",
+    "110271": "116271",
+    "131870": "133870",
+    "129167": "129367",
+    "123367": "129367",
+    "155765": "128765",
+    "153765": "128765",
+    "134421": "134423",
+    "114423": "134423",
+    "18765": "128765",
+    "137870": "133870",
+    "131470": "133870",
+    "28765": "128765",
+    "2100139210": "2100199210"
+  }
+}

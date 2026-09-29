@@ -1,0 +1,53 @@
+/* Design tokens — giao diện sáng, dễ đọc cho nhân viên kho. */
+:root {
+  color-scheme: light;
+
+  --font-sans: 'Segoe UI', system-ui, -apple-system, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
+  --font-mono: 'Cascadia Mono', Consolas, 'SFMono-Regular', Menlo, monospace;
+
+  --bg: #f4f6f9;
+  --surface: #ffffff;
+  --surface-2: #f8fafc;
+  --border: #dde3ea;
+  --border-strong: #c3ccd6;
+  --text: #1c2430;
+  --text-muted: #5f6b7a;
+  --text-faint: #8a95a3;
+
+  --brand: #b3261e; /* đỏ KIDO */
+  --brand-strong: #8f1d17;
+  --brand-soft: #fdecea;
+
+  --primary: #1f5fae;
+  --primary-strong: #174a88;
+  --primary-soft: #e7f0fb;
+
+  /* Tone trạng thái (chỉ tô theo status_tone backend trả) */
+  --tone-success-bg: #e6f4ea;
+  --tone-success-fg: #146c2e;
+  --tone-success-bd: #a8d5b5;
+  --tone-warning-bg: #fff4e0;
+  --tone-warning-fg: #8a4b00;
+  --tone-warning-bd: #f3c77d;
+  --tone-danger-bg: #fdecea;
+  --tone-danger-fg: #a4201a;
+  --tone-danger-bd: #f1aaa5;
+  --tone-info-bg: #e7f0fb;
+  --tone-info-fg: #174a88;
+  --tone-info-bd: #a9c6ea;
+  --tone-neutral-bg: #eef1f4;
+  --tone-neutral-fg: #3f4a57;
+  --tone-neutral-bd: #cfd6de;
+
+  /* Khung ô ký trên ảnh */
+  --box-signed: #1e8e3e;
+  --box-missing-required: #d93025;
+  --box-missing-optional: #6b7785;
+  --box-review: #e8710a;
+
+  --radius: 8px;
+  --radius-sm: 5px;
+  --shadow: 0 1px 2px rgba(16, 24, 40, 0.06), 0 1px 3px rgba(16, 24, 40, 0.08);
+  --shadow-lg: 0 8px 24px rgba(16, 24, 40, 0.14);
+  --header-h: 56px;
+}

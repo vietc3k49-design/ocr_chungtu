@@ -1,0 +1,9 @@
+opencv-python<5
+numpy
+pillow
+openpyxl
+pytesseract
+matplotlib
+pandas
+rapidfuzz
+jinja2

@@ -1,0 +1,92 @@
+{
+  "_mo_ta": "Phân loại LOẠI CON của chứng từ. Nguyên tắc: đọc CHỮ IN trên tờ giấy làm căn cứ chính; mã/ký hiệu chỉ làm ĐỐI CHỨNG. Lý do: chữ in do luật bắt buộc, không đổi theo năm hay theo nhà cung cấp phần mềm; còn ký hiệu đổi mỗi năm (1C25TAA -> 1C27TAA) và mỗi người bán tự đặt 2 ký tự cuối.",
+  "_nguon": "Nghị định 123/2020/NĐ-CP và Thông tư 78/2021/TT-BTC (cấu trúc ký hiệu hóa đơn).",
+  "_cach_so_khop": "Bỏ dấu tiếng Việt, ép 'đ'/'Đ' -> 'd'/'D' TRƯỚC khi NFD, rồi rapidfuzz.partial_ratio >= nguong_khop. Không dùng so khớp chính xác: OCR đọc sai chính tả thường xuyên (GIÁ TĂNG / GIA TẮNG).",
+  "version": "1.0.0",
+  "nguong_khop": 90,
+  "nguong_vung_dau": 0.45,
+  "subtypes": {
+    "HOA_DON": {
+      "_ghi_chu": "Thứ tự có nghĩa: cụm ĐẶC HIỆU đứng trước cụm chung. 'HÓA ĐƠN ĐIỀU CHỈNH' phải xét trước 'HÓA ĐƠN GIÁ TRỊ GIA TĂNG' vì tờ điều chỉnh vẫn in cả hai.",
+      "mac_dinh": "HOA_DON_KHAC",
+      "luat": [
+        {
+          "ma": "HOA_DON_DIEU_CHINH",
+          "ten": "Hóa đơn điều chỉnh",
+          "cum": [
+            "HOA DON DIEU CHINH",
+            "DIEU CHINH CHO HOA DON",
+            "HOA DON DIEN TU DIEU CHINH"
+          ],
+          "diem": 100
+        },
+        {
+          "ma": "HOA_DON_THAY_THE",
+          "ten": "Hóa đơn thay thế",
+          "cum": [
+            "HOA DON THAY THE",
+            "THAY THE CHO HOA DON",
+            "HOA DON DIEN TU THAY THE"
+          ],
+          "diem": 100
+        },
+        {
+          "ma": "HOA_DON_GTGT",
+          "ten": "Hóa đơn giá trị gia tăng",
+          "cum": [
+            "HOA DON GIA TRI GIA TANG",
+            "HOA DON GTGT"
+          ],
+          "diem": 90
+        },
+        {
+          "ma": "HOA_DON_BAN_HANG",
+          "ten": "Hóa đơn bán hàng",
+          "cum": [
+            "HOA DON BAN HANG"
+          ],
+          "diem": 90
+        },
+        {
+          "ma": "PXK_VCNB_DIEN_TU",
+          "ten": "Phiếu xuất kho kiêm vận chuyển nội bộ (dạng hóa đơn điện tử)",
+          "cum": [
+            "PHIEU XUAT KHO KIEM VAN CHUYEN NOI BO"
+          ],
+          "diem": 85
+        },
+        {
+          "ma": "PXK_HANG_GUI_BAN_DAI_LY",
+          "ten": "Phiếu xuất kho hàng gửi bán đại lý",
+          "cum": [
+            "PHIEU XUAT KHO HANG GUI BAN DAI LY"
+          ],
+          "diem": 85
+        }
+      ],
+      "co_chuyen_doi": {
+        "_ghi_chu": "Bản CHUYỂN ĐỔI từ hóa đơn điện tử ra giấy mới có chữ ký tay để kiểm. Bản điện tử gốc thì không.",
+        "cum": [
+          "HOA DON CHUYEN DOI TU HOA DON DIEN TU",
+          "NGAY CHUYEN DOI",
+          "NGUOI CHUYEN DOI"
+        ]
+      },
+      "doi_chung_ky_hieu": {
+        "_ghi_chu": "CHỈ dùng để phát hiện mâu thuẫn, KHÔNG dùng để ra kết luận. Đọc được mà lệch với chữ in -> đẩy người soát.",
+        "bat": true,
+        "khuon": "^[1-7][CK][0-9]{2}[TDLMNBGH][0-9A-Z]{2}$",
+        "ky_tu_1_sang_subtype": {
+          "1": "HOA_DON_GTGT",
+          "2": "HOA_DON_BAN_HANG",
+          "3": "HOA_DON_BAN_TAI_SAN_CONG",
+          "4": "HOA_DON_BAN_HANG_DU_TRU_QG",
+          "5": "TEM_VE_THE",
+          "6": "PXK_VCNB_DIEN_TU",
+          "7": "PXK_HANG_GUI_BAN_DAI_LY"
+        }
+      }
+    }
+  },
+  "_nguong_khop_can_cu": "Đo trên 21 tờ hóa đơn (scratch/_phanloai_2909/, 29/09/2026): cụm ĐÚNG 'HOA DON GIA TRI GIA TANG' đạt 100/100 ở CẢ 21 tờ; cụm SAI cao nhất là 83 — 'HÓA ĐƠN ĐIỆN TỬ' khớp mờ với 'HÓA ĐƠN ĐIỀU CHỈNH' được 83. Ngưỡng 80 làm 12/21 tờ bị gán nhầm HOA_DON_DIEU_CHINH. Ngưỡng 90 nằm giữa khe 83–100. KHÔNG hạ ngưỡng này nếu chưa đo lại trên ảnh thật có hóa đơn điều chỉnh."
+}

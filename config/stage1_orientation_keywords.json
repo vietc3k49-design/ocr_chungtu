@@ -1,0 +1,18 @@
+{
+  "_comment": [
+    "Tu khoa cho OCR Lexical Guard cua Tang 1 (tools/stage1_normalizer.py: coarse_orientation).",
+    "Dung de xac nhan anh dang dung chieu 0 do hay nguoc 180 do: OCR dai 35% dau trang, dem so tu khoa xuat hien.",
+    "So khop chuoi con tren van ban da chuan hoa (bo dau tieng Viet, UPPERCASE, ky tu khac chu/so -> khoang trang).",
+    "Tu khoa co dau cung duoc, se tu chuan hoa khi nap. Danh sach nay gan voi KIDO va cac sieu thi — doi khach hang thi sua file nay.",
+    "Thieu file / loi doc / danh sach rong -> lexical guard TAT (khong co ban du phong hardcode trong Python):",
+    "in RuntimeWarning va moi trang ghi truong `lexical_guard = {enabled: false, ...}` vao JSON ket qua.",
+    "Tach tu code ra config ngay 2026-09-27 (AGENTS.md 9.7), noi dung giu nguyen 35 tu khoa cu."
+  ],
+  "keywords": [
+    "CONG TY", "KIDO", "HOA DON", "DON HANG", "GIAO HANG", "LOADING PLAN",
+    "BANG KE", "PHIEU", "XUAT KHO", "NHAP KHO", "DIEU DONG", "BIEN BAN",
+    "GS25", "COOP", "CO OP", "AEON", "BHX", "WINMART", "LOTTE", "EMART",
+    "SATRA", "KEM", "SAN PHAM", "TONG CONG", "THANH TIEN", "NGAY", "SO",
+    "PURCHASE", "ORDER", "VENDOR", "DATE", "PAGE", "TOTAL", "ANPHA", "CHUYEN"
+  ]
+}

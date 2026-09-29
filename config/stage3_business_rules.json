@@ -1,0 +1,229 @@
+{
+  "version": "3.3.0",
+  "system_metadata": {
+    "BHX": {
+      "order_code": "3.1",
+      "system": "BHX",
+      "channel": "Kênh MT - Siêu thị / Cửa hàng tiện lợi",
+      "description": "3.1 Hệ thống Bách Hóa Xanh"
+    },
+    "COOP": {
+      "order_code": "3.2",
+      "system": "COOP",
+      "channel": "Kênh MT - Siêu thị / Cửa hàng tiện lợi",
+      "description": "3.2 Hệ thống Coop"
+    },
+    "BIGC": {
+      "order_code": "3.3",
+      "system": "BIGC",
+      "channel": "Kênh MT - Siêu thị / Cửa hàng tiện lợi",
+      "description": "3.3 Hệ thống Big C"
+    },
+    "LOTTE": {
+      "order_code": "3.4",
+      "system": "LOTTE",
+      "channel": "Kênh MT - Siêu thị / Cửa hàng tiện lợi",
+      "description": "3.4 Hệ thống Lotte"
+    },
+    "AEON": {
+      "order_code": "3.5",
+      "system": "AEON",
+      "channel": "Kênh MT - Siêu thị / Cửa hàng tiện lợi",
+      "description": "3.5 Hệ thống Aeon"
+    },
+    "WINMART": {
+      "order_code": "3.6",
+      "system": "WINMART",
+      "channel": "Kênh MT - Siêu thị / Cửa hàng tiện lợi",
+      "description": "3.6 Hệ thống Vin / WinMart"
+    },
+    "EMART": {
+      "order_code": "3.7",
+      "system": "EMART",
+      "channel": "Kênh MT - Siêu thị / Cửa hàng tiện lợi",
+      "description": "3.7 Hệ thống Emart"
+    },
+    "GS25": {
+      "order_code": "3.8",
+      "system": "GS25",
+      "channel": "Kênh MT - Siêu thị / Cửa hàng tiện lợi",
+      "description": "3.8 Hệ thống GS25"
+    },
+    "SATRA": {
+      "order_code": "3.11",
+      "system": "SATRA",
+      "channel": "Kênh MT - Siêu thị / Cửa hàng tiện lợi",
+      "description": "3.11 Hệ thống Satra & Kingfood"
+    },
+    "NPP": {
+      "order_code": "2.1",
+      "system": "NPP",
+      "channel": "Kênh GT - Giao hàng về Nhà Phân Phối",
+      "description": "2.x Đơn hàng kênh GT / NPP"
+    },
+    "KHO_THUE": {
+      "order_code": "5.1",
+      "system": "KHO_THUE",
+      "channel": "Hàng chuyển kho thuê / Kho nội bộ",
+      "description": "5.1 Hàng chuyển kho thuê CLK/AJ/Lotte/Anpha"
+    },
+    "KHO_NOIBO": {
+      "order_code": "5.2",
+      "system": "KHO_NOIBO",
+      "channel": "Hàng chuyển kho thuê / Kho nội bộ",
+      "description": "5.2 Hàng trung chuyển kho Nội Bộ"
+    },
+    "KHO_CHUA_RO": {
+      "order_code": "5.x",
+      "system": "KHO_CHUA_RO",
+      "channel": "Hàng chuyển kho thuê / Kho nội bộ",
+      "description": "Chuyển kho — Tầng 2 KHÔNG đủ dấu hiệu văn bản để xác định kho thuê (5.1) hay kho nội bộ (5.2); không đoán"
+    },
+    "GENERAL": {
+      "order_code": "CHUNG",
+      "system": "GENERAL",
+      "channel": "Tất cả loại hình vận chuyển",
+      "description": "Chứng từ vận chuyển & Ngoại lệ chung"
+    },
+    "COMMON": {
+      "order_code": "CHUNG",
+      "system": "GENERAL",
+      "channel": "Tất cả loại hình vận chuyển",
+      "description": "Chứng từ vận chuyển & Ngoại lệ chung"
+    }
+  },
+  "canonical_form_patterns": [
+    {
+      "pattern": "bàn giao hóa đơn|BBBG Hoadon",
+      "doc_type": "BBBG_HOADON"
+    },
+    {
+      "pattern": "bàn giao hàng hóa|BBBGHH",
+      "doc_type": "BBBG_HANG_HOA"
+    },
+    {
+      "pattern": "pallet|BBBG Pallet",
+      "doc_type": "BBBG_PALLET"
+    },
+    {
+      "pattern": "Phiếu xuất kho kiêm vận chuyển|PXKKVCNB",
+      "doc_type": "PXKKVCNB"
+    },
+    {
+      "pattern": "xác nhận xuất nhập|nhập kho|Phieu nhap kho",
+      "doc_type": "PHIEU_NHAP_KHO"
+    },
+    {
+      "pattern": "Phiếu xuất hàng|Phieu xuat hang",
+      "doc_type": "PHIEU_XUAT_HANG"
+    },
+    {
+      "pattern": "Lệnh điều xe|Lenh dieu xe",
+      "doc_type": "LENH_DIEU_XE"
+    },
+    {
+      "pattern": "Lệnh xuất hàng|Loading plan",
+      "doc_type": "LOADING_PLAN"
+    },
+    {
+      "pattern": "Biên bản nhận hàng|thu hồi kem|THUHOI",
+      "doc_type": "BB_THU_HOI"
+    },
+    {
+      "pattern": "nợ hàng",
+      "doc_type": "BB_NO_HANG"
+    },
+    {
+      "pattern": "trả hàng",
+      "doc_type": "BB_TRA_HANG"
+    },
+    {
+      "pattern": "biểu đồ nhiệt độ|nhiệt độ",
+      "doc_type": "BIEU_DO_NHIET_DO"
+    },
+    {
+      "pattern": "Hóa đơn|Hoadon|HĐ GTGT",
+      "doc_type": "HOA_DON"
+    },
+    {
+      "pattern": "Đơn đặt hàng|PO",
+      "doc_type": "PO"
+    },
+    {
+      "pattern": "Phiếu giao hàng|PGH",
+      "doc_type": "PHIEU_GIAO_HANG"
+    }
+  ],
+  "doc_type_rules": [
+    {
+      "rule_id": "RULE_DOC_BBBG_HOADON_2_2",
+      "doc_type": "BBBG_HOADON",
+      "target_order_code": "2.2",
+      "description": "BBBG Hóa đơn là biểu mẫu đặc thù của quy trình 2.2 (giao hàng hộ qua NPP)",
+      "exception_rule_id": "RULE_EXP_2_2_DELIVERY_DELEGATE",
+      "identity_source": "config/stage3_shipment_reference.json -> business_exceptions[RULE_EXP_2_2_DELIVERY_DELEGATE]"
+    },
+    {
+      "rule_id": "RULE_DOC_PHIEU_XUAT_HANG_5_1",
+      "doc_type": "PHIEU_XUAT_HANG",
+      "target_order_code": "5.1",
+      "description": "Phiếu xuất hàng kiêm vận chuyển nội bộ là biểu mẫu kho thuê Anpha-AG (5.1)",
+      "exception_rule_id": "RULE_EXP_5_1_RENTAL_WAREHOUSE",
+      "identity_source": "config/stage3_shipment_reference.json -> business_exceptions[RULE_EXP_5_1_RENTAL_WAREHOUSE]"
+    }
+  ],
+  "domain_rules": [
+    {
+      "rule_id": "RULE_DOM_5_1_PHIEU_NHAP_KHO",
+      "pass": "3.3",
+      "doc_type": "PHIEU_NHAP_KHO",
+      "system": "KHO_THUE",
+      "exception_rule_id": "RULE_EXP_5_1_RENTAL_WAREHOUSE",
+      "identity_type": "DOC_TYPE_RULE",
+      "description": "Phieu xac nhan xuat nhap cua kho thue chi phat sinh trong quy trinh 5.1; dinh danh lo lay tu business_exceptions.RULE_EXP_5_1_RENTAL_WAREHOUSE."
+    }
+  ],
+  "retired_domain_rules": [
+    {
+      "rule_id": "RULE_DOM_5_1_BBBG_FORM_CODE",
+      "pass": "3.3",
+      "doc_type": "BBBG_HANG_HOA",
+      "evidence_keyword_contains": "01-05",
+      "exception_rule_id": "RULE_EXP_5_1_RENTAL_WAREHOUSE",
+      "identity_type": "FORM_CODE_EVIDENCE",
+      "description": "Ma bieu mau SOP LG/GN/OP/01-05 la Bien ban ban giao hang hoa kho thue (5.1). Khong co bang chung nay thi KHONG doan - roi xuong Pass 4.",
+      "retired_on": "2026-09-27",
+      "retired_reason": "KHONG PHAI BANG CHUNG KHO THUE. LG/GN/OP/01-05 la ma SOP cua CHINH bieu mau Bien ban ban giao hang hoa 3 ben (tu khoa phan loai doc_type BBBG_HANG_HOA o Tang 2), in san tren ca BBBGHH 5.1 lan 5.2 (cung mau). Guideline Excel: dong 60 (5.1) va dong 66 (5.2) deu yeu cau 'Bien ban ban giao hang hoa 3 ben'. Rule chi khop khi OCR tinh co doc duoc ma SOP truoc tieu de (BBBGHH_5.1: doc_keyword='LG/GN/OP/01-05'; BBBGHH_5.2: doc_keyword='BIEN BAN BAN GIAO HANG HOA') -> la doan mo, gom nham bat ky BBBG kho noi bo nao doc duoc ma SOP. Xem scratch/_phase4/stage3/REPORT.md muc 4."
+    }
+  ],
+  "standalone_form_variants": {
+    "_doc": "Tach lo cho doc_type standalone co NHIEU bieu mau khac nhau (vd BB_THU_HOI = 4.1 va 4.2). Phan biet bang BANG CHUNG BIEU MAU (evidence.doc_keyword Tang 2 da khop: ma SOP / tieu de rieng cua tung mau), KHONG theo system, KHONG theo ten file. Khop dung 1 bien the -> gan lo; khop 0 hoac >=2 bien the -> KHONG doan, cach ly UNRESOLVED (FORM_VARIANT_UNRESOLVED / FORM_VARIANT_AMBIGUOUS). Thieu khai bao cho doc_type -> cach ly (FORM_VARIANT_CONFIG_MISSING). Tu khoa chung ('THU HOI', 'DE XUAT THU HOI', 'QUY TRINH THU HOI') co y KHONG dung: header ca 2 mau deu in 'QUY TRINH THU HOI HANG TU (KHO) NPP VE CONG TY' (DX_THUHOI4.1__0 va THU_HOI_4.2__0, stage2 header_text_preview 27/09). Ma SOP: 4.1 = LG/CS/OP/08-02 (BM02), 4.2 = LG/CS/OP/08-01 (doc duoc tren header THU_HOI_4.2__0).",
+    "BB_THU_HOI": [
+      {
+        "variant_id": "4.1",
+        "batch_id": "BATCH_4.1_COOP",
+        "order_code": "4.1",
+        "system": "COOP",
+        "doc_keyword_contains_any": ["LG/CS/OP/08-02", "DE XUAT TRA HANG", "BIEN BAN NHAN HANG"],
+        "description": "4.1 Bien ban nhan hang - kiem de xuat tra hang (ma SOP LG/CS/OP/08-02, BM02). batch_id/system giu nguyen ten cu de khop stage3_gt/stage4_gt; nhan 'COOP' la no dat ten lich su, KHONG dung de phan loai."
+      },
+      {
+        "variant_id": "4.2",
+        "batch_id": "BATCH_4.2_NPP",
+        "order_code": "4.2",
+        "system": "NPP",
+        "doc_keyword_contains_any": ["LG/CS/OP/08-01", "PHIEU THU HOI KIEM BIEN BAN", "THU HOI TEM QUE", "THE TRUNG THUONG"],
+        "description": "4.2 Phieu thu hoi kiem bien ban ban giao the trung thuong / de xuat thu hoi tem que LAP."
+      }
+    ]
+  },
+  "_note_retired_domain_rules":"retired_domain_rules KHONG duoc stage3_resolver doc; giu lai de truy vet ly do go bo. Khong dua lai vao domain_rules neu khong co bang chung moi.",
+  "_note_reference_data": "business_exceptions va shipment_aliases (ma chuyen / lenh dieu dong / hoa don CU THE cua bo anh demo) DA CHUYEN sang config/stage3_shipment_reference.json (Giai doan 5, 27/09) - cung ban chat bang 12 ma chuyen Tang 2 (AGENTS.md 9.2). File nay chi con LUAT nghiep vu tong quat. doc_type_rules/domain_rules tro toi dinh danh lo qua exception_rule_id; thieu file tham chieu -> luat do KHONG kich hoat (khong doan), tai lieu roi xuong Pass 2-4.",
+  "system_context_guards": {
+    "_doc": "Guard cho Pass 3.2 (lan truyền lô theo hệ thống khi hệ thống chỉ có 1 lô đã neo). Chỉ CHẶN gom, không mở gom. Thiếu khóa -> mặc định BẬT. Đánh giá: scratch/_nb/t3fix/ (AGENTS 9.11.F.3).",
+    "_identifier_conflict_same_doc_type": "G1: chứng từ mang invoice_no/po_no/pxk_no riêng, không khớp chứng từ CÙNG doc_type nào đã neo mạnh (Pass 1/2) trong lô đích, trong khi lô đích đã có chứng từ cùng loại mang số khác -> cách ly (IDENTIFIER_CONFLICT_WITH_SYSTEM_CONTEXT). Lý do: bằng chứng duy nhất còn lại là 'cùng khách hàng'; chứng từ tự khai là một đơn khác.",
+    "identifier_conflict_same_doc_type": true,
+    "_exclude_multi_system_shipments": "G2: mã chuyến / lệnh điều động neo dưới >=2 hệ thống ở Pass 1 -> chuyến chở cho nhiều khách (giao qua NPP / ghép chuyến) hoặc mã đọc trùng; nhãn hệ thống không định danh 'chuyến duy nhất của khách' -> không dùng làm ngữ cảnh 3.2 và không chặn lập lô BUSINESS_KEY.",
+    "exclude_multi_system_shipments": true
+  }
+}

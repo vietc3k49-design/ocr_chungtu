@@ -1,0 +1,266 @@
+{
+  "version": "1.0.0",
+  "mo_ta": "Template ô ký theo biểu mẫu, dùng cho các doc_type BỐ CỤC CỐ ĐỊNH (hạng A). Toạ độ box_norm = [x0, y0, x1, y1] tỉ lệ 0..1 trên ảnh Tầng 1. KHÔNG dùng cho LOADING_PLAN — biểu mẫu đó có bảng hàng hoá co giãn, y trôi 0.54, phải dò nhãn động (Tầng 3b).",
+  "nguon": "Toạ độ do API vision (beeknoee / gemini-2.5-flash-lite, prompt template-v2-box2d) đề xuất, người dùng soát tay xác nhận trên ảnh overlay.",
+  "templates": {
+    "LENH_DIEU_XE": {
+      "so_thu_tu": 1,
+      "ten_hien_thi": "Lệnh điều xe",
+      "ten_day_du": "Lệnh điều xe - Xe lạnh NCC",
+      "ma_bieu_mau": "LG/GN/CP/01-01",
+      "quy_trinh": "Qui trình xuất kho - Logistic (thành phẩm, hàng hóa KM, POSM, spare part, tủ)",
+      "trang_thai": "DA_CHOT",
+      "ngay_chot": "2026-09-28",
+      "ket_qua_do": "11/11 ô đúng trên mẫu L_nh_i_u_xe__0 (engine sig_stroke_ownership). Engine cũ stage4_verifier_v2 chỉ đúng 6/11.",
+      "anh_soat": [
+        "test/01_Lenh_dieu_xe__o_bat_buoc.png",
+        "test/01_Lenh_dieu_xe__ket_qua_do.png",
+        "test/01_Lenh_dieu_xe__tat_ca_o.png"
+      ],
+      "hang": "A",
+      "ly_do_hang_A": "Biểu mẫu khung cứng: mục 1 đúng 4 điểm giao, mục 2 đúng 4 dòng, mục 3-4 khung cố định. Không có bảng co giãn nên y không trôi.",
+      "systems": [
+        "COMMON"
+      ],
+      "n_mau_da_soat": 1,
+      "canh_bao": "Mới soát trên 1 mẫu (L_nh_i_u_xe__0). Chưa kiểm chứng độ ổn định giữa nhiều tờ.",
+      "yeu_cau_moc": false,
+      "ly_do_khong_moc": "Người dùng xác nhận 28/09: biểu mẫu này chỉ cần chữ ký. Mẫu quan sát được không có dấu mộc nào, toàn bộ mực là bút bi xanh. Khai báo tường minh để KHÔNG báo thiếu mộc oan.",
+      "targets": [
+        {
+          "role": "NPP xác nhận giờ & nhiệt độ giao hàng đến kho",
+          "box_norm": [
+            0.78,
+            0.17,
+            0.9,
+            0.32
+          ],
+          "required": true,
+          "expected_color": "blue_ink",
+          "ghi_chu": "Khung bao CẢ 4 dòng điểm giao L1-L4 (phương án a, người dùng chọn 28/09). Hạn chế đã biết: chỉ kết luận được 'có ít nhất 1 chữ ký', KHÔNG kiểm được đủ chữ ký theo số điểm giao thực tế. Nâng lên 4 khung riêng khi đọc được số điểm giao ở mục 1."
+        },
+        {
+          "role": "NV hóa đơn giao",
+          "box_norm": [
+            0.69,
+            0.45,
+            0.83,
+            0.52
+          ],
+          "required": true,
+          "expected_color": "blue_ink",
+          "cot": "Hoá đơn/PXKKVCNB giao"
+        },
+        {
+          "role": "Tài xế nhận",
+          "box_norm": [
+            0.71,
+            0.52,
+            0.83,
+            0.58
+          ],
+          "required": true,
+          "expected_color": "blue_ink",
+          "cot": "Hoá đơn/PXKKVCNB giao"
+        },
+        {
+          "role": "Tài xế giao",
+          "box_norm": [
+            0.87,
+            0.46,
+            1.0,
+            0.51
+          ],
+          "required": true,
+          "expected_color": "blue_ink",
+          "cot": "Hoá đơn/PXKKVCNB nhận"
+        },
+        {
+          "role": "NV hóa đơn nhận",
+          "box_norm": [
+            0.86,
+            0.52,
+            0.96,
+            0.58
+          ],
+          "required": true,
+          "expected_color": "blue_ink",
+          "cot": "Hoá đơn/PXKKVCNB nhận"
+        },
+        {
+          "role": "ĐP giao hàng/Thủ kho — TRƯỚC khi sử dụng",
+          "box_norm": [
+            0.04,
+            0.81,
+            0.18,
+            0.89
+          ],
+          "required": true,
+          "expected_color": "blue_ink"
+        },
+        {
+          "role": "Tài xế — TRƯỚC khi sử dụng",
+          "box_norm": [
+            0.19,
+            0.81,
+            0.32,
+            0.89
+          ],
+          "required": true,
+          "expected_color": "blue_ink"
+        },
+        {
+          "role": "ĐP giao hàng/Thủ kho — SAU khi sử dụng",
+          "box_norm": [
+            0.31,
+            0.81,
+            0.52,
+            0.89
+          ],
+          "required": true,
+          "expected_color": "blue_ink",
+          "ghi_chu": "Người dùng xác nhận 28/09 là BẮT BUỘC. Trên mẫu L_nh_i_u_xe__0 ô này TRỐNG ⇒ tờ đó thiếu chữ ký thật."
+        },
+        {
+          "role": "Tài xế — SAU khi sử dụng",
+          "box_norm": [
+            0.52,
+            0.81,
+            0.69,
+            0.89
+          ],
+          "required": true,
+          "expected_color": "blue_ink"
+        },
+        {
+          "role": "Trưởng nhóm điều phối giao hàng",
+          "box_norm": [
+            0.31,
+            0.9,
+            0.67,
+            0.99
+          ],
+          "required": true,
+          "expected_color": "blue_ink"
+        },
+        {
+          "role": "Tài xế xe tải",
+          "box_norm": [
+            0.69,
+            0.89,
+            0.97,
+            0.99
+          ],
+          "required": true,
+          "expected_color": "blue_ink"
+        },
+        {
+          "role": "Xác nhận của bảo vệ",
+          "box_norm": [
+            0.76,
+            0.12,
+            0.8,
+            0.16
+          ],
+          "required": false,
+          "expected_color": "blue_ink"
+        },
+        {
+          "role": "Kho nhập hàng trả lại xác nhận",
+          "box_norm": [
+            0.91,
+            0.27,
+            0.97,
+            0.34
+          ],
+          "required": false,
+          "expected_color": "blue_ink"
+        },
+        {
+          "role": "Giám đốc/Trưởng bộ phận Logistic",
+          "box_norm": [
+            0.04,
+            0.89,
+            0.31,
+            0.99
+          ],
+          "required": false,
+          "expected_color": "blue_ink"
+        }
+      ],
+      "anh_mau": "L_nh_i_u_xe__0.png",
+      "yeu_cau_chu_ky": true
+    },
+    "BIEU_DO_NHIET_DO": {
+      "so_thu_tu": 2,
+      "ten_hien_thi": "Biểu đồ nhiệt độ",
+      "ten_day_du": "Biểu đồ nhiệt độ hành trình",
+      "ma_bieu_mau": null,
+      "quy_trinh": "Bản in máy từ hệ thống GPS / datalogger nhiệt độ",
+      "trang_thai": "DA_CHOT",
+      "ngay_chot": "2026-09-29",
+      "hang": "KHONG_AP_DUNG",
+      "systems": [
+        "COMMON"
+      ],
+      "n_mau_da_soat": 1,
+      "yeu_cau_chu_ky": false,
+      "yeu_cau_moc": false,
+      "ly_do_khong_kiem": "Bản in máy: bảng log hành trình + đồ thị nhiệt độ. KHÔNG có ô ký in sẵn, KHÔNG có chỗ đóng dấu. Người dùng xác nhận 29/09. Tầng 4 v1 đã xếp KHONG_YEU_CAU (AGENTS.md §7.A mục 7), v2 ABSTAIN — giữ nguyên, KHÔNG dựng bộ kiểm để tránh báo thiếu oan.",
+      "phan_loai": {
+        "ket_qua": "BIEU_DO_NHIET_DO / COMMON, conf 0.94, doc_margin 1.0, status DAT",
+        "tu_khoa_khop": "DỪNG XE KHÔNG TẮT MÁY (điểm 1.0)",
+        "da_sua_29_09": "Bỏ từ khóa 'TRẠM XE BUÝT' khỏi config/stage2_keywords.json — là tên địa điểm trong dữ liệu chuyến, không phải đặc trưng biểu mẫu. Đo lại 72 ảnh: 0/72 đổi doc_type/system, 0/72 đổi confidence. Benchmark không đổi: doc_type 98.61%, Trục 2 87.50%, cấp họ 91.67%.",
+        "diem_yeu_con_lai": "Tờ này KHÔNG có tiêu đề biểu mẫu; nhận diện dựa vào chuỗi trạng thái trong cột 3 bảng log ('Dừng xe không tắt máy' / 'Xe đang chạy'). Chuyến không có đoạn dừng thì mất một tín hiệu. Chỉ có 1 ảnh demo nên CHƯA ĐO được mức độ rủi ro."
+      },
+      "targets": []
+    }
+  },
+  "chi_muc": {
+    "_ghi_chu": "Chỉ mục liệt kê MỌI biểu mẫu đã chốt cách xử lý, kể cả biểu mẫu KHÔNG dùng template toạ độ cứng (xem trường co_che). Mục `templates` phía trên chỉ chứa biểu mẫu hạng A có toạ độ cứng.",
+    "1": {
+      "ma": "LENH_DIEU_XE",
+      "ten": "Lệnh điều xe",
+      "chu_ky": true,
+      "o_bat_buoc": 11,
+      "o_tong": 14,
+      "moc": false,
+      "trang_thai": "DA_CHOT",
+      "ngay_chot": "2026-09-28",
+      "co_che": "Template toạ độ cứng (config nay, mục templates)"
+    },
+    "2": {
+      "ma": "BIEU_DO_NHIET_DO",
+      "ten": "Biểu đồ nhiệt độ",
+      "chu_ky": false,
+      "o_bat_buoc": 0,
+      "o_tong": 0,
+      "moc": false,
+      "trang_thai": "DA_CHOT",
+      "ngay_chot": "2026-09-29",
+      "co_che": "Không dựng bộ kiểm (biểu mẫu không có ô ký / chỗ đóng dấu)"
+    },
+    "3": {
+      "ma": "LOADING_PLAN",
+      "ten": "Loading Plan (Lệnh xuất hàng / Phiếu xuất kho kiêm vận chuyển)",
+      "co_che": "Dò nhãn chức danh trên TỪNG ảnh (Tầng 3b) — KHÔNG có toạ độ cứng ở config này",
+      "chu_ky": true,
+      "o_bat_buoc": "2–3 / 5 (thay đổi theo kênh SOP: NPP & KHO_NOIBO & UNRESOLVED = 3 [Tài xế, Người giao, Người nhận]; MT & KHO_THUE = 2 [Tài xế, Người giao])",
+      "o_tong": 5,
+      "moc": "CHUA_XAC_DINH",
+      "ghi_chu_moc": "Chính sách hiện có (config/stage4_lp_required_policy.json) chỉ quy định vai trò KÝ, chưa có điều khoản nào về mộc. Chưa đo ⇒ không khai báo yeu_cau_moc.",
+      "trang_thai": "DA_CHOT",
+      "ngay_chot": "2026-09-29",
+      "config_lien_quan": [
+        "config/stage3b_loading_plan_labels.json",
+        "config/stage4_lp_required_policy.json"
+      ],
+      "engine": [
+        "tools/stage3b_zone_resolver.py (dò cột)",
+        "tools/stage4_required_policy.py (vai trò bắt buộc theo kênh)"
+      ],
+      "ket_qua_do": "Tầng 3b dò nhãn trên 19 trang production: 70/70 box không đổi sau fallback PSM (AGENTS.md 9.13.E). Chữ ký ver2 trên GT v4 (69 ô): 44/25/0/0 — P = R = 100%; LƯU Ý engine thiết kế sau khi xem GT v3, holdout thật chỉ 5 ô ⇒ KHÔNG phải ước lượng tổng quát hoá (AGENTS.md 9.11).",
+      "canh_bao": "Bảng hàng hoá co giãn: y trôi 0.54, x trôi 0.01–0.06 giữa các tờ ⇒ tuyệt đối KHÔNG hardcode toạ độ. Nhánh fallback_columns trong config nhãn để enabled=false có chủ đích (ảnh kém phân giải sinh hộp lệch tới 0.019, vi phạm tính chất \"sai độ phân giải chỉ được ABSTAIN\")."
+    }
+  }
+}

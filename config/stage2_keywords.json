@@ -1,0 +1,376 @@
+{
+  "_comment": [
+    "Tu dien tu khoa + nguong phan loai Tang 2 (tools/stage2_classifier.py). Nap MOT LAN tai import.",
+    "Chuoi giu NGUYEN DANG GOC (co dau tieng Viet); normalize_text() duoc ap dung khi nap, giong het truoc.",
+    "THU TU CO Y NGHIA: thu tu doc_type/system va thu tu tu khoa trong moi nhom anh huong ket qua (tie-break khi sap xep ung vien). Khong sap xep lai.",
+    "Thieu file / JSON hong / thieu khoa -> module RAISE loi, KHONG co ban du phong hardcode trong Python.",
+    "Guard logic (is_pxk, has_po_title, AEON word-boundary, xoa cau tham chieu cheo 'KEM THEO ... HOA DON GTGT') nam trong Python, KHONG o day.",
+    "Xem AGENTS.md muc 4.A truoc khi sua."
+  ],
+  "_rules": [
+    "1. TUYET DOI KHONG dua 'KIDO FOODS' vao HOA_DON: ten cong ty xuat hien tren hau het moi chung tu -> nhan nham HOA_DON hang loat.",
+    "2. KHONG dung tu khoa qua ngan / tien to: dung 'LG/GN/OP/01-01' cho LENH_DIEU_XE, KHONG dung 'LG/GN/OP/01' (nuot ma LG/GN/OP/01-05 cua BBBG_HANG_HOA).",
+    "3. KHONG dua 'PXKKVCNB' vao nhom khac va KHONG coi no la tin hieu doc lap du tin cay: chu nay xuat hien o tieu de cot bang ke trong LENH_DIEU_XE. Viec nhan dien PXKKVCNB do guard is_pxk trong Python dam nhan (kiem tra TRUOC LENH_DIEU_XE, chan 'HOA DON DIEN TU' an vao PXKKVCNB).",
+    "4. KHONG dua 'LOTTE' vao internal_subtype_markers.INTERNAL_KHO_THUE: trung tu khoa MT_LOTTE (keyword shadowing).",
+    "5. 'NOI BO', 'DIEU DONG' KHONG phai dau hieu phan biet kho thue/kho noi bo: co san trong mau in cua CA HAI loai.",
+    "6. Moi thay doi tu dien phai chay lai tools/run_full_benchmark_and_save.py va tools/test_stage3_suite.py.",
+    "7. KHONG dua TEN DIA DIEM trong du lieu chuyen vao tu dien: 'TRAM XE BUYT' tung nam trong BIEU_DO_NHIET_DO vi tinh co co trong to demo duy nhat -> voi fuzzy_threshold 0.78 no co the khop nham dia chi giao hang tren chung tu khac. Bo 29/09/2026."
+  ],
+  "doc_rules": [
+    {
+      "doc_type": "PXKKVCNB",
+      "keywords": [
+        "PHIẾU XUẤT KHO KIÊM VẬN CHUYỂN NỘI BỘ",
+        "XUẤT KHO KIÊM VẬN CHUYỂN",
+        "PXKKVCNB",
+        "KIÊM VẬN CHUYỂN NỘI BỘ",
+        "XUAT KHO KIEM VAN CHUYEN",
+        "CAN CU LENH DIEU DONG",
+        "CĂN CỨ LỆNH ĐIỀU ĐỘNG"
+      ]
+    },
+    {
+      "doc_type": "LENH_DIEU_XE",
+      "keywords": [
+        "LỆNH ĐIỀU XE",
+        "LỆNH ĐIỀU ĐỘNG XE",
+        "LG/GN/OP/01-01",
+        "LG/GN/C2/01-01",
+        "XE LẠNH NCC",
+        "LENH DIEU XE",
+        "DIEU DONG XE",
+        "XE LAN NCC",
+        "XE LANH"
+      ]
+    },
+    {
+      "doc_type": "BBBG_PALLET",
+      "keywords": [
+        "PHIẾU GIAO NHẬN PALLET",
+        "GIAO NHẬN PALLET",
+        "PALLET GIẤY 4 LIÊN",
+        "BBBG PALLET"
+      ]
+    },
+    {
+      "doc_type": "BBBG_HANG_HOA",
+      "keywords": [
+        "LG/GN/OP/01-05",
+        "BIÊN BẢN BÀN GIAO HÀNG HÓA",
+        "BÀN GIAO HÀNG HÓA 3 BÊN",
+        "BÀN GIAO HÀNG HÓA",
+        "BBBGHH",
+        "BAN GIAO HANG HOA"
+      ]
+    },
+    {
+      "doc_type": "BB_THU_HOI",
+      "keywords": [
+        "LG/CS/OP/08-01",
+        "LG/CS/OP/08-02",
+        "PHIẾU THU HỒI KIÊM BIÊN BẢN",
+        "ĐỀ XUẤT THU HỒI",
+        "QUY TRÌNH THU HỒI",
+        "THU HỒI TEM QUE",
+        "THU HOI",
+        "DE XUAT THU HOI"
+      ]
+    },
+    {
+      "doc_type": "BB_NO_HANG",
+      "keywords": [
+        "BIÊN BẢN NỢ HÀNG",
+        "NỢ HÀNG",
+        "BB NO HANG",
+        "NỢ CHO KHÁCH HÀNG",
+        "NO CHO KHACH HANG",
+        "NO HANG",
+        "BIEN BAN NO HANG",
+        "TRUONG HOP NO HANG",
+        "TRUONG HOP NO HONG",
+        "AP DUNG CHO CAC TRUONG HOP NO",
+        "AP DUNG CHO TRUONG HOP NO"
+      ]
+    },
+    {
+      "doc_type": "BB_TRA_HANG",
+      "keywords": [
+        "BIÊN BẢN ĐỔI, TRẢ CHO KHÁCH HÀNG",
+        "BIÊN BẢN ĐỔI TRẢ HÀNG",
+        "BIÊN BẢN ĐỔI, TRẢ",
+        "ĐỔI TRẢ HÀNG",
+        "BB TRA HANG",
+        "ĐỔI, TRẢ CHO KHÁCH HÀNG",
+        "ĐỔI, TRẢ",
+        "BIEN BAN DOI TRA",
+        "DOI TRA HANG",
+        "DOI TRA CHO KHACH HANG"
+      ]
+    },
+    {
+      "doc_type": "BIEU_DO_NHIET_DO",
+      "keywords": [
+        "BIỂU ĐỒ NHIỆT ĐỘ",
+        "DATALOGGER",
+        "DỪNG XE KHÔNG TẮT MÁY",
+        "XE ĐANG CHẠY",
+        "NHIỆT ĐỘ THÙNG",
+        "BIEU DO NHIET DO"
+      ]
+    },
+    {
+      "doc_type": "PHIEU_XUAT_HANG",
+      "keywords": [
+        "PHIẾU XUẤT HÀNG",
+        "PHIEU XUAT HANG",
+        "XUẤT HÀNG KHO"
+      ]
+    },
+    {
+      "doc_type": "PHIEU_NHAP_KHO",
+      "keywords": [
+        "PHIẾU NHẬP KHO",
+        "PHIEU NHAP KHO",
+        "ANPHA-AG",
+        "NHAP KHO KIDO"
+      ]
+    },
+    {
+      "doc_type": "PHIEU_GIAO_HANG",
+      "keywords": [
+        "PHIẾU GIAO HÀNG",
+        "PHIEU GIAO HANG",
+        "PGH",
+        "PROCODE",
+        "PRO CODE",
+        "PHIEU GIAO NHAN",
+        "BIÊN NHẬN HÀNG",
+        "BIEN NHAN HANG",
+        "BIÊN NHẬN CHO ĐƠN HÀNG",
+        "GOLD COAST",
+        "LT NHA TRANG"
+      ]
+    },
+    {
+      "doc_type": "BBBG_HOADON",
+      "keywords": [
+        "XÁC NHẬN GIỮ HÓA ĐƠN",
+        "BÀN GIAO HÓA ĐƠN",
+        "GIỮ HÓA ĐƠN",
+        "BBBG HOADON"
+      ]
+    },
+    {
+      "doc_type": "LOADING_PLAN",
+      "keywords": [
+        "LOADING PLAN",
+        "BẢNG KÊ GIAO HÀNG",
+        "LỆNH XUẤT HÀNG",
+        "KHO XUẤT HÀNG: 1802",
+        "LOADING",
+        "QUY ĐỔI: PALLET",
+        "SỐ KHỐI",
+        "TRƯỞNG BP KHO",
+        "HÀNG HÓA ĐÃ NHẬN ĐỦ"
+      ]
+    },
+    {
+      "doc_type": "PO",
+      "keywords": [
+        "PURCHASE ORDER",
+        "PURCHASE NOTE",
+        "QUY CÁCH ĐẶT HÀNG",
+        "QUY CACH DAT HANG",
+        "THU MUA BIG C",
+        "TOPS MARKET",
+        "ĐƠN ĐẶT HÀNG",
+        "DON DAT HANG",
+        "BON DAT HANG",
+        "STORE ORDER",
+        "ORD SHEET",
+        "ORDER BY",
+        "ĐƠN HÀNG",
+        "ĐẶT HÀNG SỐ",
+        "ĐƠN ĐẶT HÀNG SỐ",
+        "SATRACUCM",
+        "HEAD OFFICE SOC",
+        "BUYER - DC2",
+        "ENTRY DATE"
+      ]
+    },
+    {
+      "doc_type": "HOA_DON",
+      "keywords": [
+        "HÓA ĐƠN GIÁ TRỊ GIA TĂNG",
+        "HOA DON GIA TRI GIA TANG",
+        "HOA DON GTGT",
+        "HOA DON DIEN TU",
+        "1C25TAA",
+        "1C24TAA",
+        "KÝ HIỆU",
+        "KY HIEU",
+        "HOADON",
+        "TÊN NGƯỜI BÁN HÀNG",
+        "MA CO QUAN THUE",
+        "MAU SO-KY HIEU"
+      ]
+    }
+  ],
+  "system_rules": [
+    {
+      "system": "MT_BHX",
+      "keywords": [
+        "BACH HOA XANH",
+        "0313615378",
+        "BHX_"
+      ]
+    },
+    {
+      "system": "MT_COOP",
+      "keywords": [
+        "CO.OP",
+        "COOP",
+        "SAIGON CO.OP",
+        "LIEN HIEP HTX",
+        "HTX THUONG MAI",
+        "HEAD OFFICE SOC",
+        "BUYER - DC2"
+      ]
+    },
+    {
+      "system": "MT_BIGC",
+      "keywords": [
+        "BIG C",
+        "BIGC",
+        "CENTRAL RETAIL",
+        "EB SERVICES",
+        "DICH VU EB",
+        "0105696842",
+        "THU MUA BIG C",
+        "TOPS MARKET"
+      ]
+    },
+    {
+      "system": "MT_WINMART",
+      "keywords": [
+        "WINMART",
+        "WINCOMMERCE",
+        "VINCOMMERCE",
+        "VINMART"
+      ]
+    },
+    {
+      "system": "MT_AEON",
+      "keywords": [
+        "STORE ORDER AEON",
+        "AEON MALL",
+        "TTTM AEON",
+        "STORE ORDER"
+      ]
+    },
+    {
+      "system": "MT_LOTTE",
+      "keywords": [
+        "LOTTE",
+        "LOTTE MART",
+        "TTTM LOTTE",
+        "ORD SHEET",
+        "NHA TRANG GOLD COAST"
+      ]
+    },
+    {
+      "system": "MT_EMART",
+      "keywords": [
+        "EMART",
+        "THISO RETAIL",
+        "THISO"
+      ]
+    },
+    {
+      "system": "MT_GS25",
+      "keywords": [
+        "GS25",
+        "GS 25",
+        "TIEN LOI TONG HOP VIET NAM"
+      ]
+    },
+    {
+      "system": "MT_SATRA",
+      "keywords": [
+        "SATRA",
+        "SATRAMART",
+        "SATRAFOODS",
+        "TONG CONG TY THUONG MAI SAI GON",
+        "SATRACUCM"
+      ]
+    },
+    {
+      "system": "INTERNAL_TRANSFER",
+      "keywords": [
+        "DIEU DONG",
+        "NOI BO",
+        "ANPHA",
+        "CLK",
+        "AJI",
+        "QUANG NAM",
+        "BAC NINH",
+        "KHO NOI BO",
+        "KHO THUE"
+      ]
+    },
+    {
+      "system": "GT",
+      "keywords": [
+        "KENH NPP",
+        "NHA PHAN PHOI",
+        "NPP",
+        "DAI LY",
+        "VAN LOC PHAT",
+        "VANLOCPHAT",
+        "HOC MON",
+        "VIET TRUNG",
+        "LONG QUOC KIM",
+        "LONGQUOCKIM",
+        "LONG KHANH",
+        "LONGKHANH"
+      ]
+    }
+  ],
+  "_internal_subtype_comment": [
+    "Phan loai con cua INTERNAL_TRANSFER theo SOP KIDO muc 5: 5.1 'Hang chuyen kho thue CLK/AJ/Lotte/Anpha' -> INTERNAL_KHO_THUE; 5.2 'Hang trung chuyen kho Noi Bo (Kho Quang Nam/ Bac Ninh)' -> INTERNAL_KHO_NOIBO.",
+    "Dau hieu la TEN DON VI / DIA DANH KHO do SOP liet ke, khop theo word-boundary. Co dau hieu CA HAI phia hoac khong co -> giu INTERNAL_TRANSFER, khong doan."
+  ],
+  "internal_subtype_markers": [
+    {
+      "subtype": "INTERNAL_KHO_THUE",
+      "keywords": [
+        "KHO THUE",
+        "KHO TP THUE",
+        "ANPHA",
+        "CLK",
+        "AJI"
+      ]
+    },
+    {
+      "subtype": "INTERNAL_KHO_NOIBO",
+      "keywords": [
+        "KHO NOI BO",
+        "QUANG NAM",
+        "BAC NINH"
+      ]
+    }
+  ],
+  "thresholds": {
+    "_comment": "Tham so gac cong / so khop. Doi gia tri = doi hanh vi -> bat buoc do lai benchmark.",
+    "fuzzy_threshold": 0.78,
+    "conf_pass_threshold": 0.78,
+    "conf_warn_threshold": 0.5,
+    "margin_pass_threshold": 0.1,
+    "system_fuzzy_threshold": 0.9,
+    "fuzzy_min_keyword_len": 8,
+    "exact_len_bonus_divisor": 100.0,
+    "exact_len_bonus_cap": 0.1,
+    "early_exit_min_hits": 2,
+    "early_exit_min_hits_with_digits": 1
+  }
+}

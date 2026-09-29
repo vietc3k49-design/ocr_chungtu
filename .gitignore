@@ -1,0 +1,60 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+api.txt
+
+# Node / Frontend
+node_modules/
+/web/frontend/dist/
+/web/frontend/node_modules/
+.vite/
+.vite-temp/
+*.tsbuildinfo
+
+# Large archives and cache files (>100MB exceeds GitHub limits)
+*.zip
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.pkl
+*.pickle
+
+# Scratch temporary benchmark image outputs (~2.4GB)
+scratch/**/*.png
+scratch/**/*.jpg
+scratch/**/images/
+scratch/**/samples/
+scratch/**/viz/
+
+# System Files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Du lieu lon / nhap: giu tren may, KHONG dua len GitHub ----
+/output/
+/case/
+/scratch/
+/test/
+scratch_ke_hoach.txt
+
+# ---- Khoa bi mat & file khoa Office ----
+*.env.bak
+~$*

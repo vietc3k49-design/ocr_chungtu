@@ -1,0 +1,268 @@
+{
+  "_schema": "stage4_lp_required_policy/v1",
+  "_purpose": "Chinh sach vai tro ky BAT BUOC cua LOADING_PLAN theo kenh giao hang. Nguon: SOP KIDO sheet Guideline. Tach khoi Python: doi SOP => sua file nay, khong sua code.",
+  "_missing_file_behavior": "tools/stage4_required_policy.py nem Stage4PolicyError — KHONG co du phong hardcode.",
+  "version": "1.0.0",
+  "doc_type": "LOADING_PLAN",
+  "sop_source": {
+    "file": "docs/Copy of HUONG DAN CHUNG TU GIAO NHAN.xlsx",
+    "sheet": "Guideline",
+    "sha256": "61773ceec7aafc70cfc01af9ecf709d6991eaeff8b0c25401c37098a9493801c",
+    "approved_by": "Người dùng duyệt 27/09 (phiên giao việc Giai đoạn 5)"
+  },
+  "labels_config": "config/stage3b_loading_plan_labels.json",
+  "_roles_note": "Ghep vai tro target <-> policy theo TEN role in trong config nhan Tang 3b (label_role) va doi chieu label_index luc nap; KHONG theo vi tri cot cung.",
+  "roles": {
+    "NGUOI_LAP_PHIEU": {
+      "label_index": 0,
+      "label_role": "Người lập phiếu"
+    },
+    "TRUONG_BP_KHO": {
+      "label_index": 1,
+      "label_role": "Trưởng BP Kho / Nhóm trưởng"
+    },
+    "TAI_XE": {
+      "label_index": 2,
+      "label_role": "Tài xế (Lái xe nhận hàng)"
+    },
+    "NGUOI_NHAN": {
+      "label_index": 3,
+      "label_role": "Người nhận hàng"
+    },
+    "NGUOI_GIAO": {
+      "label_index": 4,
+      "label_role": "Người giao / Thủ kho xuất"
+    }
+  },
+  "always_optional_roles": {
+    "roles": [
+      "NGUOI_LAP_PHIEU",
+      "TRUONG_BP_KHO"
+    ],
+    "decision_source": "Người dùng duyệt 27/09 (phiên giao việc Giai đoạn 5): Người lập phiếu và Trưởng BP Kho/Nhóm trưởng KHÔNG required ở mọi kênh; vẫn verify + lưu audit.",
+    "sop_basis": "Không câu SOP nào trong sheet Guideline yêu cầu chữ ký người lập phiếu / trưởng kho trên Loading plan mang về."
+  },
+  "system_to_channel": {
+    "_note": "Gia tri `system` cua Tang 2 (kiem tra tren output/stage2_out va output/stage2_gt.json). Thu tu xet: unresolved_systems -> exact -> prefix. Khong khop gi => UNRESOLVED (khong doan).",
+    "unresolved_systems": [
+      "",
+      "COMMON",
+      "UNKNOWN",
+      "INTERNAL_TRANSFER",
+      "KHO_CHUA_RO"
+    ],
+    "exact": {
+      "GT": "NPP",
+      "NPP": "NPP",
+      "INTERNAL_KHO_THUE": "KHO_THUE",
+      "INTERNAL_KHO_NOIBO": "KHO_NOIBO"
+    },
+    "prefix": [
+      {
+        "prefix": "MT_",
+        "channel": "MT"
+      }
+    ]
+  },
+  "channels": {
+    "NPP": {
+      "required_roles": [
+        "TAI_XE",
+        "NGUOI_GIAO",
+        "NGUOI_NHAN"
+      ],
+      "interpretation": "Tài xế mang về bản có ký nhận ghi rõ họ tên người nhận hàng ⇒ Người nhận hàng bắt buộc; Tài xế + Người giao/Thủ kho bắt buộc (chứng từ giao nhận kho–NVC).",
+      "sop_rules": [
+        {
+          "sheet": "Guideline",
+          "cell": "H5",
+          "section": "2.1 Đơn hàng xuất bán cho Nhà Phân Phối (GT)",
+          "form_link": "Loading Plan2.1'!A1",
+          "quote": "- 1 bản cho kho soạn hàng\n- 1 bản kho xuất hàng và lưu lại\n- Nhà vận chuyển mang đi 3 bản\n- Giao hàng xong NPP giữ 1 bản, tài xế mang về 2 bản có ký nhận ghi rõ họ trên người nhận hàng"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H7",
+          "section": "2.2 Đơn hàng xuất bán  kênh MT giao về NPP (NPP giao hàng hộ)",
+          "form_link": "Loading Plan 2.2'!A1",
+          "quote": "- 1 bản cho kho soạn hàng\n- 1 bản kho xuất hàng và lưu lại\n- Nhà vận chuyển mang đi 3 bản\n- Giao hàng xong NPP giữ 1 bản, tài xế mang về 2 bản có ký nhận ghi rõ họ trên người nhận hàng"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H10",
+          "section": "2.3 Hàng chuyển kho MT đưa về kho NPP",
+          "form_link": "Loading Plan 2.3'!A1",
+          "quote": "- 1 bản cho kho soạn hàng\n- 1 bản kho xuất hàng và lưu lại\n- Nhà vận chuyển mang đi 3 bản\n- Giao hàng xong NPP giữ 1 bản, tài xế mang về 2 bản có ký nhận ghi rõ họ trên người nhận hàng"
+        }
+      ]
+    },
+    "MT": {
+      "required_roles": [
+        "TAI_XE",
+        "NGUOI_GIAO"
+      ],
+      "interpretation": "Khách hàng MT không ký trên load ⇒ Người nhận hàng KHÔNG bắt buộc; chứng từ đối chiếu giữa kho và NVC ⇒ Tài xế + Người giao/Thủ kho bắt buộc.",
+      "sop_rules": [
+        {
+          "sheet": "Guideline",
+          "cell": "H15",
+          "section": "3.1 Hệ thống Bách Hóa Xanh (Có quy định booking trước khi giao hàng)",
+          "form_link": "Loading Plan3.1'!A1",
+          "quote": "Khách hàng MT không ký trên load hàng, mà đây là chứng từ đối chiếu việc giao nhận giữa kho và NVC, đối chiếu số OD trên bảng kê để thanh toán CPVC ( Tài Xế có thể giữ riêng, không đưa khách hàng, tránh thất lạc)"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H19",
+          "section": "3.2 Hệ thống Coop",
+          "form_link": "Load 3.2'!A1",
+          "quote": "Khách hàng MT không ký trên load hàng, mà đây là chứng từ đối chiếu việc giao nhận giữa kho và NVC, đối chiếu số OD trên bảng kê để thanh toán CPVC ( Tài Xế có thể giữ riêng, không đưa khách hàng, tránh thất lạc)"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H23",
+          "section": "3.3 Hệ thống Big C",
+          "form_link": "Load3.3!A1",
+          "quote": "Khách hàng MT không ký trên load hàng, mà đây là chứng từ đối chiếu việc giao nhận giữa kho và NVC, đối chiếu số OD trên bảng kê để thanh toán CPVC ( Tài Xế có thể giữ riêng, không đưa khách hàng, tránh thất lạc)"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H27",
+          "section": "3.4 Hệ thống Lotte",
+          "form_link": "Loading 3.4'!A1",
+          "quote": "Khách hàng MT không ký trên load hàng, mà đây là chứng từ đối chiếu việc giao nhận giữa kho và NVC, đối chiếu số OD trên bảng kê để thanh toán CPVC ( Tài Xế có thể giữ riêng, không đưa khách hàng, tránh thất lạc)"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H31",
+          "section": "3.5 Hệ thống Aeon (Có quy định booking trước khi giao hàng)",
+          "form_link": "Load 3.5'!A1",
+          "quote": "Khách hàng MT không ký trên load hàng, mà đây là chứng từ đối chiếu việc giao nhận giữa kho và NVC, đối chiếu số OD trên bảng kê để thanh toán CPVC ( Tài Xế có thể giữ riêng, không đưa khách hàng, tránh thất lạc)"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H35",
+          "section": "3.6 Hệ thống Vin",
+          "form_link": "Load 3.6'!A1",
+          "quote": "Khách hàng MT không ký trên load hàng, mà đây là chứng từ đối chiếu việc giao nhận giữa kho và NVC, đối chiếu số OD trên bảng kê để thanh toán CPVC ( Tài Xế có thể giữ riêng, không đưa khách hàng, tránh thất lạc)"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H39",
+          "section": "3.7 Các hệ thống Emart",
+          "form_link": "Load 3.7'!A1",
+          "quote": "Khách hàng MT không ký trên load hàng, mà đây là chứng từ đối chiếu việc giao nhận giữa kho và NVC, đối chiếu số OD trên bảng kê để thanh toán CPVC ( Tài Xế có thể giữ riêng, không đưa khách hàng, tránh thất lạc)"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H43",
+          "section": "3.8 Các hệ thống GS25 (Có quy định booking trước khi giao hàng)",
+          "form_link": "Load 3.8'!A1",
+          "quote": "Khách hàng MT không ký trên load hàng, mà đây là chứng từ đối chiếu việc giao nhận giữa kho và NVC, đối chiếu số OD trên bảng kê để thanh toán CPVC ( Tài Xế có thể giữ riêng, không đưa khách hàng, tránh thất lạc)"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H47",
+          "section": "3.9 Các hệ thống Circle K => Hiện tại NPP giao hộ NVC chưa giao trực tiếp",
+          "form_link": null,
+          "quote": "Khách hàng MT không ký trên load hàng, mà đây là chứng từ đối chiếu việc giao nhận giữa kho và NVC, đối chiếu số OD trên bảng kê để thanh toán CPVC ( Tài Xế có thể giữ riêng, không đưa khách hàng, tránh thất lạc)"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H51",
+          "section": "3.10 Các hệ thống Mega => Hiện tại NPP giao hộ NVC chưa giao trực tiếp",
+          "form_link": null,
+          "quote": "Khách hàng MT không ký trên load hàng, mà đây là chứng từ đối chiếu việc giao nhận giữa kho và NVC, đối chiếu số OD trên bảng kê để thanh toán CPVC ( Tài Xế có thể giữ riêng, không đưa khách hàng, tránh thất lạc)"
+        },
+        {
+          "sheet": "Guideline",
+          "cell": "H55",
+          "section": "3.11 Hệ thống Satra",
+          "form_link": "Load 3.10'!A1",
+          "quote": "Khách hàng MT không ký trên load hàng, mà đây là chứng từ đối chiếu việc giao nhận giữa kho và NVC, đối chiếu số OD trên bảng kê để thanh toán CPVC ( Tài Xế có thể giữ riêng, không đưa khách hàng, tránh thất lạc)"
+        }
+      ]
+    },
+    "KHO_THUE": {
+      "required_roles": [
+        "TAI_XE",
+        "NGUOI_GIAO"
+      ],
+      "interpretation": "Chữ ký đầy đủ của lái xe + NCC (kho thuê) ⇒ Tài xế + Người giao/Thủ kho bắt buộc; Người nhận hàng không bắt buộc (Người dùng duyệt 27/09 (phiên giao việc Giai đoạn 5)).",
+      "sop_rules": [
+        {
+          "sheet": "Guideline",
+          "cell": "H59",
+          "section": "5.1 Hàng chuyển kho thuê CLK/AJ/Lotte/Anpha",
+          "form_link": "Loadingplan 5.1'!A1",
+          "quote": "NCC Kho thuê giữ 1 bản, 2 liên còn lại mang về có chữ ký đầy đủ của lái xe + NCC"
+        }
+      ]
+    },
+    "KHO_NOIBO": {
+      "required_roles": [
+        "TAI_XE",
+        "NGUOI_GIAO",
+        "NGUOI_NHAN"
+      ],
+      "interpretation": "Chữ ký đầy đủ của lái xe + nhân viên giao nhận các bên ⇒ Tài xế + Người giao/Thủ kho + Người nhận hàng bắt buộc.",
+      "sop_rules": [
+        {
+          "sheet": "Guideline",
+          "cell": "H65",
+          "section": "5.2 Hàng trung chuyển kho Nội Bộ (Kho Quảng Nam/ Kho Bắc Ninh)",
+          "form_link": "Loading Plan 5.2'!A1",
+          "quote": "Thủ kho đầu nhận giữ 1 bản, 2 liên còn lại mang về có chữ ký đầy đủ của lái xe + nhân viên giao nhận các bên"
+        }
+      ]
+    },
+    "UNRESOLVED": {
+      "required_roles": [
+        "TAI_XE",
+        "NGUOI_GIAO",
+        "NGUOI_NHAN"
+      ],
+      "interpretation": "Kênh không xác định ⇒ áp chính sách NGHIÊM NHẤT (hợp của mọi kênh) và gắn cờ policy_channel_unresolved=True; không đoán kênh.",
+      "decision_source": "Người dùng duyệt 27/09 (phiên giao việc Giai đoạn 5)",
+      "sop_rules": []
+    }
+  },
+  "ky_online": {
+    "_muc_dich": "Vai tro duoc CHAP NHAN CHU KY ONLINE: he thong in san ho ten nguoi lap tren bieu mau. Khong co muc tay van tinh la DA KY, nhung ghi bang chung RIENG (E_SIGNATURE_PRINTED_NAME) de phan biet voi chu ky tay.",
+    "_pham_vi_nghiem_ngat": "CHI ap cho NGUOI_LAP_PHIEU. Nguoi dung chot 29/09/2026: \"ten in la da ky nhung no chi dung voi cot nguoi lap phieu thoi, cac o khac khong duoc\". Cac vai tro con lai la chu ky cua BEN NGOAI (tai xe, nguoi nhan, nguoi giao) — neu ap luat nay cho ho thi bat ky to nao in san ten se tu dong DAT ma khong ai ky = PASS GIA.",
+    "_y_nghia_that": "He thong in ten nguoi lap len MOI to, nen phep kiem nay gan nhu LUON dung. No chi bat duoc to MAT HAN ten in (photo cat xen, bieu mau loi). KHONG duoc doc la \"da kiem chu ky nguoi lap phieu\".",
+    "bat": true,
+    "roles": [
+      "NGUOI_LAP_PHIEU"
+    ],
+    "label_roles": [
+      "Người lập phiếu"
+    ],
+    "roi_mo_rong_duoi": 0.3,
+    "_roi_note": "Ten in nam o MEP DUOI o, mot phan LOT RA NGOAI hop dang do muc (do 29/09 tren Loading_Plan3.1__0: OCR trong hop khong thay ten, nhin anh thi co). Noi ROI xuong duoi 30% chieu cao hop CHI cho phep do chu in; KHONG doi vung do muc xanh.",
+    "ocr_psm": [
+      6,
+      7,
+      11
+    ],
+    "chuoi_loai_tru": [
+      "NGUOI LAP PHIEU",
+      "KY VA GHI RO HO TEN",
+      "QUY DOI",
+      "PALLET",
+      "SO KG",
+      "SO KHOI",
+      "TRUONG BP KHO",
+      "TRUONG NHOM",
+      "TAI XE",
+      "NGUOI NHAN",
+      "NGUOI GIAO",
+      "THU KHO",
+      "TONG CONG"
+    ],
+    "_loai_tru_note": "Chuoi in san cua bieu mau — phai loai truoc khi coi phan con lai la ten nguoi. So khop sau khi bo dau + viet hoa, theo kieu CHUA (substring).",
+    "so_tu_toi_thieu": 2,
+    "so_chu_cai_toi_thieu": 6,
+    "nguong_loai_tru_mo": 80,
+    "_nguong_note": "So khop CHINH XAC khong du: OCR doc sai chinh ta nhan in san (\"(Ky va ghi ro ho ten)\" -> \"Ky va ghi ro ho len\") nen chuoi loai tru truot va nhan bieu mau bi nhan nham thanh ho ten (do 29/09, 2/2 ca). Dung rapidfuzz.partial_ratio >= nguong nay, cung ky thuat voi Tang 3b."
+  }
+}
