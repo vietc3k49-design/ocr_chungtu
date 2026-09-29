@@ -58,3 +58,6 @@ scratch_ke_hoach.txt
 # ---- Khoa bi mat & file khoa Office ----
 *.env.bak
 ~$*
+
+# ---- Notebook: giu tren may, khong dua len GitHub (web/pipeline chi dung tools/*.py) ----
+*.ipynb
